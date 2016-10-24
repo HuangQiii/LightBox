@@ -14,14 +14,14 @@
 		this.lbImg = this.popup.find(".lb-img");
 		this.lbNextBtn = this.popup.find(".lb-btn-next");
 		this.lbPrevBtn = this.popup.find(".lb-btn-prev");
-		this.lbCap = this.popup.find(".lb-cap");
+		this.lbCap = this.popup.find("#lb-cap");
 		this.lbDes = this.popup.find(".lb-des");
 		this.currentIndex = this.popup.find(".lb-index");
 		this.lbX = this.popup.find(".lb-x");
 
 		this.groupName = null;
 		this.groupData = [];
-		this.bodyNode.delegate(".js-lb","click",function(e){
+		this.bodyNode.on("click",".js-lb",function(e){
 			e.stopPropagation();
 
 			var currentGroupName = $(this).attr("data-group");
@@ -180,7 +180,23 @@
 				winWidth = $(window).width(),
 				winHeight= $(window).height();
 
+			self.lbView.css("overflow","hidden");
+			
 			var scale = Math.min(winWidth / (width + 10),winHeight / (height + 10),1);
+			
+			if(width <= 125 || height <= 45){
+				// if(height <= 45){
+				// 	scale = 200 / width
+				// }else{
+				// 	if(winHeight / height * width >= 125){
+				// 		scale = winHeight / height;
+				// 	}else{
+				// 		scale = 150 / width;
+				// 		self.lbView.css("overflow","scroll");
+				// 	}
+				// }
+				scale = Math.max((200 / width),(50 / height));
+			}
 
 			width = width * scale;
 			height= height *scale;
